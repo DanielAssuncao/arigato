@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.assuncao.arigato.business.service.ICadastroClienteService;
 import br.com.assuncao.arigato.entity.CadastroCliente;
 import br.com.assuncao.arigato.entity.filter.CadastroClienteFilter;
+import br.com.assuncao.arigato.exceptions.ObjectNotFoundException;
 import br.com.assuncao.arigato.persistence.CadastroClienteRepository;
 
 @Service
@@ -27,8 +28,8 @@ public class CadastroClienteService implements ICadastroClienteService{
 	@Override
 	@Transactional
 	public CadastroCliente save(CadastroCliente entidade) throws Exception {
-		//TODO
-		return null;
+		validate(entidade);
+		return repository.save(entidade);
 	}
 
 	@Override
@@ -40,7 +41,8 @@ public class CadastroClienteService implements ICadastroClienteService{
 	@Override
 	@Transactional
 	public CadastroCliente findOne(BigDecimal id) {
-		return repository.findById(id).orElse(null);
+		return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + CadastroCliente.class.getName()));
 	}
 
 	@Override
@@ -56,6 +58,14 @@ public class CadastroClienteService implements ICadastroClienteService{
 	}
 	
 	private void validate (CadastroCliente cadCliente) throws Exception {
-		//TODO
+		if(repository.getByCpf(cadCliente.getCpf(), cadCliente.getId()) != null) {
+			throw new Exception("O CPF inserido já está cadastrado no sistema!");
+		}
+		if(cadCliente.getCpf() == null) {
+			throw new Exception("O campo CPF deve ser preenchido!");
+		}
+		if(cadCliente.getNome() == null) {
+			throw new Exception("O campo NOME deve ser preenchido!");
+		}
 	}
 }
