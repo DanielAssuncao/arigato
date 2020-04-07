@@ -1,26 +1,27 @@
 package br.com.assuncao.arigato.presentation.controller;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.assuncao.arigato.business.service.core.CadastroClienteService;
+import br.com.assuncao.arigato.business.service.ICadastroClienteService;
 import br.com.assuncao.arigato.entity.CadastroCliente;
-import br.com.assuncao.arigato.entity.CadastroEndereco;
+import br.com.assuncao.arigato.entity.filter.CadastroClienteFilter;
 
 @RestController
 @RequestMapping(value="/cadastro-clientes")
-public class CadastroClienteController {
+public class CadastroClienteController extends CrudBaseController<CadastroCliente, BigDecimal, CadastroClienteFilter, ICadastroClienteService>{
+	
+	protected static final String CONTEXTO = "/cadastro-cliente.do";
 	
 	@Autowired
-	private CadastroClienteService service;
+	public CadastroClienteController(ICadastroClienteService service) {
+		super(CONTEXTO, service);
+	}
 	
+	/**
 	@RequestMapping(method=RequestMethod.GET)
 	public String listar() {
 		return "Controller de cadastro de clientes funcionando!";
@@ -62,6 +63,6 @@ public class CadastroClienteController {
 	}
 	
 	return ResponseEntity.ok().body(salvo);
-	}
+	}**/
 }
 
