@@ -1,17 +1,21 @@
 package br.com.assuncao.arigato.presentation.controller;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.assuncao.arigato.business.service.ICadastroClienteService;
+import br.com.assuncao.arigato.entity.CadastroCidade;
 import br.com.assuncao.arigato.entity.CadastroCliente;
 import br.com.assuncao.arigato.entity.filter.CadastroClienteFilter;
 
 @RestController
-@RequestMapping(value="/cadastro-clientes")
+@RequestMapping(value="/cadastro-cliente")
 public class CadastroClienteController extends CrudBaseController<CadastroCliente, BigDecimal, CadastroClienteFilter, ICadastroClienteService>{
 	
 	protected static final String CONTEXTO = "/cadastro-cliente.do";
@@ -21,18 +25,21 @@ public class CadastroClienteController extends CrudBaseController<CadastroClient
 		super(CONTEXTO, service);
 	}
 	
+	
+	@RequestMapping(value = "/buscarCadCidades", method=RequestMethod.GET)
+	protected List<CadastroCidade> buscarCadastroCidades() { 
+		List<CadastroCidade> listaCidades = new ArrayList<>();
+	
+	try {
+		//listaCidades = service.buscarCidades();
+	} catch (Exception e) {
+		 e.getMessage();
+	}
+	
+	return listaCidades;
+	}
+	
 	/**
-	@RequestMapping(method=RequestMethod.GET)
-	public String listar() {
-		return "Controller de cadastro de clientes funcionando!";
-	}
-	
-	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable BigDecimal id) {
-		CadastroCliente cadastroCliente = service.findOne(id);
-		return ResponseEntity.ok().body(cadastroCliente);
-	}
-	
 	@RequestMapping(value="/save", method=RequestMethod.GET)
 	public ResponseEntity<?> save() {
 	
