@@ -9,11 +9,11 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class CadastroClienteFilter{
 	
-	private String nomeCliente;
+	private String nome;
 	
-	private BigDecimal telefoneCliente;
+	private BigDecimal telefone;
 	
-	private BigDecimal rgCliente;
+	private BigDecimal rg;
 	
-	private BigDecimal cpfCliente;
+	private BigDecimal cpf;
 }
