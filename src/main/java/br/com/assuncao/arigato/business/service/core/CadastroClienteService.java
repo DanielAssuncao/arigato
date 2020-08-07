@@ -21,8 +21,7 @@ public class CadastroClienteService implements ICadastroClienteService{
 
 	@Override
 	public List<CadastroCliente> findAll(CadastroClienteFilter filter) {
-		//TODO
-		return null;
+		return repository.getAll(filter.getNome(), filter.getTelefone(), filter.getRg(), filter.getCpf());
 	}
 
 	@Override
@@ -35,7 +34,9 @@ public class CadastroClienteService implements ICadastroClienteService{
 	@Override
 	@Transactional
 	public void delete(BigDecimal id) {
-		//TODO
+		repository.findById(id).orElseThrow(() -> new GeneralException("Objeto não encontrado! Id: " + id + ", Tipo: " + CadastroCliente.class.getName()));
+		
+		repository.deleteById(id);
 	}
 
 	@Override
@@ -53,8 +54,7 @@ public class CadastroClienteService implements ICadastroClienteService{
 	@Override
 	@Transactional
 	public List<CadastroCliente> getAll() {
-		//TODO
-		return null;
+		return repository.findAllByOrderByNomeAsc();
 	}
 	
 	private void validate (CadastroCliente cadCliente) {
