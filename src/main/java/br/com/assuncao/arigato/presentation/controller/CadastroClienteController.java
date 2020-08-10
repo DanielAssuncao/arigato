@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.assuncao.arigato.business.service.ICadastroCidadeService;
 import br.com.assuncao.arigato.business.service.ICadastroClienteService;
 import br.com.assuncao.arigato.entity.CadastroCidade;
 import br.com.assuncao.arigato.entity.CadastroCliente;
@@ -20,9 +21,12 @@ public class CadastroClienteController extends CrudBaseController<CadastroClient
 	
 	protected static final String CONTEXTO = "/cadastro-cliente.do";
 	
+	private ICadastroCidadeService cadastroCidadeService;
+	
 	@Autowired
-	public CadastroClienteController(ICadastroClienteService service) {
+	public CadastroClienteController(ICadastroClienteService service, ICadastroCidadeService cadastroCidadeService) {
 		super(CONTEXTO, service);
+		this.cadastroCidadeService = cadastroCidadeService;
 	}
 	
 	
@@ -31,7 +35,7 @@ public class CadastroClienteController extends CrudBaseController<CadastroClient
 		List<CadastroCidade> listaCidades = new ArrayList<>();
 	
 	try {
-		//listaCidades = service.buscarCidades();
+		listaCidades = cadastroCidadeService.getAll();
 	} catch (Exception e) {
 		 e.getMessage();
 	}
