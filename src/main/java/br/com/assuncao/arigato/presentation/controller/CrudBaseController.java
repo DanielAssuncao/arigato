@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.assuncao.arigato.business.service.ICrudService;
 import br.com.assuncao.arigato.exceptions.GeneralException;
@@ -42,8 +43,6 @@ public abstract class CrudBaseController<T, I, F, S extends ICrudService<T, I, F
         
         prepararFormLista(service);
         
-        //Enviar URL_BASE para o front
-        
         return listaBuscada;
     }
     
@@ -52,8 +51,6 @@ public abstract class CrudBaseController<T, I, F, S extends ICrudService<T, I, F
     protected List<T> filtro(@RequestBody F filter) {       
     	
     	prepararFormLista(service);
-    	
-    	//Enviar URL_BASE para o front
         
         return this.getAll(filter);
     }
@@ -62,8 +59,6 @@ public abstract class CrudBaseController<T, I, F, S extends ICrudService<T, I, F
     protected void novo() {
                 
         prepararFormNovo(service);
-        
-      //Enviar URL_BASE para o front
     }
     
     @RequestMapping(value = "/salvar", method=RequestMethod.POST)
@@ -84,21 +79,18 @@ public abstract class CrudBaseController<T, I, F, S extends ICrudService<T, I, F
         
         prepararFormEditar(service);
         
-        //Enviar URL_BASE para o front
-        
         return entidade;
     }
     
-    @RequestMapping(value = "/atualizar", method=RequestMethod.POST)
-    protected void atualizar(@ModelAttribute(ENTITY) T t){
-    	        
+    @RequestMapping(value = "/atualizar", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
+    protected ResponseEntity<String> atualizar(@RequestBody T cadCliente){
         try {
-            service.save(t);
+        	service.save(cadCliente);
         } catch (GeneralException e) {
-        	//Enviar URL_BASE para o front e redirecionar para a página NOVO
+        	return new ResponseEntity<String>("Erro: "+ e.getMessage(), HttpStatus.OK);
         }
         
-      //Enviar URL_BASE para o front e redirecionar para a página LISTA
+        return new ResponseEntity<String>("Cadastro salvo com sucesso!", HttpStatus.OK);
     }
     
     @RequestMapping(value = "/deletar", method=RequestMethod.GET)
