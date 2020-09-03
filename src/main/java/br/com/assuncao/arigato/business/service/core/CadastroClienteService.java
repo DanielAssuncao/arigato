@@ -1,6 +1,7 @@
 package br.com.assuncao.arigato.business.service.core;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,8 @@ public class CadastroClienteService implements ICadastroClienteService{
 	@Override
 	@Transactional
 	public CadastroCliente save(CadastroCliente entidade) {
-		validate(entidade);
+		validaCampos(entidade);
+		completaDataCadastro(entidade);
 		return repository.save(entidade);
 	}
 
@@ -57,15 +59,28 @@ public class CadastroClienteService implements ICadastroClienteService{
 		return repository.findAllByOrderByNomeAsc();
 	}
 	
-	private void validate (CadastroCliente cadCliente) {
+	private void validaCampos (CadastroCliente cadCliente) {
+		if(cadCliente.getNome().isBlank()) {
+			throw new GeneralException("O campo NOME deve ser preenchido!");
+		}
 		if(repository.getByCpf(cadCliente.getCpf(), cadCliente.getId()) != null) {
 			throw new GeneralException("O CPF inserido já está cadastrado no sistema!");
 		}
 		if(cadCliente.getCpf() == null) {
 			throw new GeneralException("O campo CPF deve ser preenchido!");
 		}
-		if(cadCliente.getNome() == null) {
-			throw new GeneralException("O campo NOME deve ser preenchido!");
+		if(cadCliente.getCadEndereco().getLogradouro().isBlank()) {
+			throw new GeneralException("O campo Logradouro deve ser preenchido!");
+		}
+	}
+	
+	private void completaDataCadastro(CadastroCliente cadCliente) {
+		if (cadCliente.getId() == null) {
+			cadCliente.setDataCadastro(LocalDateTime.now());
+		} else {
+			CadastroCliente dataCadastrada = new CadastroCliente();
+			dataCadastrada = this.findOne(cadCliente.getId());
+			cadCliente.setDataCadastro(dataCadastrada.getDataCadastro());
 		}
 	}
 }
