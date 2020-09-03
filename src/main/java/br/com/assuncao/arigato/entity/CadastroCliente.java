@@ -2,6 +2,7 @@ package br.com.assuncao.arigato.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
@@ -40,7 +41,7 @@ public class CadastroCliente implements Serializable{
 	private String nome;
 	
 	@Column(name="DATA_NASCIMENTO")
-	private LocalDateTime dataNascimento;
+	private LocalDate dataNascimento;
 	
 	@Column(name="TELEFONE")
 	private BigDecimal telefone;
