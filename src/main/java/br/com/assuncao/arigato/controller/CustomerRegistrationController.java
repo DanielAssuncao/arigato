@@ -1,4 +1,4 @@
-package br.com.assuncao.arigato.presentation.controller;
+package br.com.assuncao.arigato.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,6 @@ public class CustomerRegistrationController extends CrudBaseController<CustomerR
 		super(CONTEXT, service);
 		this.cityRegistrationService = cityRegistrationService;
 	}
-	
 	
 	@RequestMapping(value = "/findCityRegistration", method=RequestMethod.GET)
 	protected List<CityRegistration> findCityRegistration() { 

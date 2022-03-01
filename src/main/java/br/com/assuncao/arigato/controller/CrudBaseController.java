@@ -1,4 +1,4 @@
-package br.com.assuncao.arigato.presentation.controller;
+package br.com.assuncao.arigato.controller;
 
 import java.util.List;
 
@@ -10,15 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.assuncao.arigato.business.service.ICrudService;
 import br.com.assuncao.arigato.exceptions.GeneralException;
-import br.com.assuncao.arigato.util.ApplicationConstant;
 
 public abstract class CrudBaseController<T, I, F, S extends ICrudService<T, I, F>> {
-    
-    private static final String BASE_URL = ApplicationConstant.BASE_URL;
     
     protected static final String PAGE_LISTA = "/";
     protected static final String PAGE_FORM_EDIT = "/edit";
