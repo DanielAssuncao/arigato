@@ -18,123 +18,123 @@ import br.com.assuncao.arigato.util.ApplicationConstant;
 
 public abstract class CrudBaseController<T, I, F, S extends ICrudService<T, I, F>> {
     
-    private static final String URL_BASE = ApplicationConstant.URL_BASE;
+    private static final String BASE_URL = ApplicationConstant.BASE_URL;
     
     protected static final String PAGE_LISTA = "/";
-    protected static final String PAGE_FORM_EDITAR = "/editar";
-    protected static final String PAGE_FORM_NOVO = "/novo";
-    protected static final String PAGE_FORM_DETALHE = "/detalhe";
+    protected static final String PAGE_FORM_EDIT = "/edit";
+    protected static final String PAGE_FORM_CREATE = "/create";
+    protected static final String PAGE_FORM_DETAIL = "/detail";
     protected static final String ENTITY = "entity";
     protected static final String FILTER = "filter";
     
     protected S service;
     
-    private String contextoRaiz;
+    private String rootContext;
     
-    public CrudBaseController(String contextoRaiz, S s) {
-        this.contextoRaiz = contextoRaiz;
+    public CrudBaseController(String rootContext, S s) {
+        this.rootContext = rootContext;
         this.service = s;
     }
     
-    @RequestMapping(value = "/lista", method=RequestMethod.GET)
+    @RequestMapping(value = "/list", method=RequestMethod.GET)
     protected List<T> getAll(@ModelAttribute(FILTER) F filter) {
                 
-        List<T> listaBuscada = preencherLista(filter);
+        List<T> listFound = fillList(filter);
         
-        prepararFormLista(service);
+        prepareListForm(service);
         
-        return listaBuscada;
+        return listFound;
     }
     
-    @RequestMapping(value = "/lista", method=RequestMethod.POST, 
+    @RequestMapping(value = "/list", method=RequestMethod.POST, 
     				consumes=MediaType.APPLICATION_JSON_VALUE)
-    protected List<T> filtro(@RequestBody F filter) {       
+    protected List<T> filter(@RequestBody F filter) {       
     	
-    	prepararFormLista(service);
+    	prepareListForm(service);
         
         return this.getAll(filter);
     }
     
-    @RequestMapping(value = "/novo", method=RequestMethod.GET)
-    protected void novo() {
+    @RequestMapping(value = "/create", method=RequestMethod.GET)
+    protected void create() {
                 
-        prepararFormNovo(service);
+        prepareCreateForm(service);
     }
     
-    @RequestMapping(value = "/salvar", method=RequestMethod.POST)
+    @RequestMapping(value = "/save", method=RequestMethod.POST)
     protected void salvar(@ModelAttribute(ENTITY) T t, @ModelAttribute(FILTER) F filter) {
         try {
             service.save(t);
         } catch (GeneralException e) {
-        	//Enviar URL_BASE para o front e redirecionar para a página NOVO
+        	//Enviar URL_BASE para o front e redirecionar para a pï¿½gina NOVO
         }
         
-      //Enviar URL_BASE para o front e redirecionar para a página LISTA
+      //Enviar URL_BASE para o front e redirecionar para a pï¿½gina LISTA
     }
     
-    @RequestMapping(value = "/editar", method=RequestMethod.POST)
-    protected T editar(@RequestBody I i) {
+    @RequestMapping(value = "/edit", method=RequestMethod.POST)
+    protected T edit(@RequestBody I i) {
     
-        T entidade = service.findOne(i);
+        T entity = service.findOne(i);
         
-        prepararFormEditar(service);
+        prepareEditForm(service);
         
-        return entidade;
+        return entity;
     }
     
-    @RequestMapping(value = "/atualizar", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
-    protected ResponseEntity<String> atualizar(@RequestBody T cadCliente){
+    @RequestMapping(value = "/update", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
+    protected ResponseEntity<String> update(@RequestBody T customerRegistration){
         try {
-        	service.save(cadCliente);
+        	service.save(customerRegistration);
         } catch (GeneralException e) {
-        	return new ResponseEntity<String>("Erro: "+ e.getMessage(), HttpStatus.OK);
+        	return new ResponseEntity<String>("Error: "+ e.getMessage(), HttpStatus.OK);
         }
         
-        return new ResponseEntity<String>("Cadastro salvo com sucesso!", HttpStatus.OK);
+        return new ResponseEntity<String>("Registration successfully saved!", HttpStatus.OK);
     }
     
-    @RequestMapping(value = "/deletar", method=RequestMethod.GET)
-    protected ResponseEntity<Void> deletar(@RequestParam(name="id") I i) {
+    @RequestMapping(value = "/delete", method=RequestMethod.GET)
+    protected ResponseEntity<Void> delete(@RequestParam(name="id") I i) {
         service.delete(i);
         
         return new ResponseEntity<>(HttpStatus.OK);
     }
     
-    @RequestMapping(value = "/detalhar", method=RequestMethod.GET)
-    protected ResponseEntity<T> detalhar(@RequestParam(name="id") I i) {
+    @RequestMapping(value = "/detail", method=RequestMethod.GET)
+    protected ResponseEntity<T> detail(@RequestParam(name="id") I i) {
     	
-    	T entidade = service.findOne(i);
-    	prepararDetalhe (entidade, service);   
+    	T entity = service.findOne(i);
+    	prepareDetail (entity, service);   
     	
-    	// Enviar URL_BASE para o front e redirecionar para a página LISTA
-    	return ResponseEntity.ok().body(entidade);
+    	// Enviar URL_BASE para o front e redirecionar para a pï¿½gina LISTA
+    	return ResponseEntity.ok().body(entity);
     }
 
-    protected void prepararDetalhe(T entity, S service) {
+    protected void prepareDetail(T entity, S service) {
     	//sobrescrever caso precise preparar dados para a tela de detalhe
 	}
 
-	protected void prepararFormNovo(S service) {
-        //sobrescrever caso precise preparar dados para a tela de inclusão
+	protected void prepareCreateForm(S service) {
+        //sobrescrever caso precise preparar dados para a tela de inclusï¿½o
     }
     
-    protected void prepararFormEditar(S service) {
-        //sobrescrever caso precise preparar dados para a tela de edição
+    protected void prepareEditForm(S service) {
+        //sobrescrever caso precise preparar dados para a tela de ediï¿½ï¿½o
     }
     
-    protected void prepararFormLista(S service) {
+    protected void prepareListForm(S service) {
      	//sobrescrever caso precise preparar dados para a tela de lista
     }
 
-    protected void preencherLista() {
-        preencherLista(null);
+    protected void fillList() {
+        fillList(null);
     }
 
-    private List<T> preencherLista(F filter) {
+    private List<T> fillList(F filter) {
         return service.findAll(filter);
     }
 
-    protected String getPathPaginas() {
-        return this.contextoRaiz.replace(".do", "");
+    protected String getPathPages() {
+        return this.rootContext.replace(".do", "");
     }
 }

@@ -1,8 +1,8 @@
 package br.com.assuncao.arigato.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -22,24 +21,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="PEDIDO_DETALHE")
-@SequenceGenerator(name = PedidoDetalhe.SEQUENCE_NAME, sequenceName = PedidoDetalhe.SEQUENCE_NAME, allocationSize = 1)
-public class PedidoDetalhe implements Serializable{
+@Cacheable(false)
+@Table(name="CUSTOMER_ORDER_DETAIL")
+public class CustomerOrderDetail implements Serializable{
 	
 	private static final long serialVersionUID = -2754355710212628840L;
-
-	protected static final String SEQUENCE_NAME = "SQ_PEDIDO_DETALHE";
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = SEQUENCE_NAME)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ID")
-	private BigDecimal id;
+	private Long id;
 	
-	@JoinColumn(name="ID_PRODUTO", referencedColumnName = "ID")
+	@JoinColumn(name="ID_PRODUCT", referencedColumnName = "id")
 	@OneToOne(cascade = CascadeType.ALL)
-	private Produto produto;
+	private Product product;
 	
-	@JoinColumn(name="ID_ADICIONAL", referencedColumnName = "ID")
+	@JoinColumn(name="ID_ADD_INGREDIENT", referencedColumnName = "id")
 	@OneToOne(cascade = CascadeType.ALL)
-	private Adicional Adicional;
+	private AdditionalIngredient additionalIngredient;
+	
+	@OneToOne(mappedBy = "customerOrderDetail")
+	private CustomerOrder customerOrder;
 }
