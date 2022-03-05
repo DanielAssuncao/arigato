@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,6 +35,7 @@ public class ProductRegistration implements Serializable{
 	@Column(name="NAME")
 	private String name;
 	
+	@Min(value = 0)
 	@Column(name="VALUE")
 	private Float value;
 	

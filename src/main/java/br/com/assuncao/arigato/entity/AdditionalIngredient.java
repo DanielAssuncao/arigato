@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,12 +37,16 @@ public class AdditionalIngredient implements Serializable{
 	@OneToOne
 	private AdditionalIngredientRegistration additionalIngredientRegistration;
 	
+	@NotNull
+	@Min(value = 0)
 	@Column(name="QUANTITY")
 	private Long quantity;
 	
+	@Min(value = 0)
 	@Column(name="UNIT_VALUE")
 	private Float unitValue;
 	
+	@Min(value = 0)
 	@Column(name="TOTAL_VALUE")
 	private Float totalValue;
 	

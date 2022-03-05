@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,6 +37,10 @@ public class SalesOrder implements Serializable{
 	@OneToOne
 	private CustomerOrder customerOrder;
 	
+	@JoinColumn(name="ID_CUSTOMER", referencedColumnName = "id")
+	@OneToOne
+	private CustomerRegistration customerRegistration;
+	
 	@JoinColumn(name="ID_PAYMENT_METHOD_REG", referencedColumnName = "id")
 	@OneToOne
 	private PaymentMethodRegistration paymentMethodRegistration;
@@ -44,13 +49,11 @@ public class SalesOrder implements Serializable{
 	@OneToOne
 	private EmployeeRegistration employeeRegistration;
 	
-	@JoinColumn(name="ID_CUSTOMER_REG", referencedColumnName = "id")
-	@OneToOne
-	private CustomerRegistration customerRegistration;
-	
+	@Min(value = 0)
 	@Column(name="DISCOUNT")
 	private Long discount;
 	
+	@Min(value = 0)
 	@Column(name="SALES_TOTAL_VALUE")
 	private Float salesTotalValue;
 	

@@ -14,7 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
+import br.com.assuncao.arigato.util.ApplicationConstant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,29 +37,42 @@ public class CustomerRegistration implements Serializable{
 	@Column(name="ID")
 	private Long id;
 	
+	@NotNull
+	@Pattern(regexp = "^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$", message = ApplicationConstant.REGEX_NAME_FORMAT)
 	@Column(name="NAME")
 	private String name;
 	
 	@Column(name="BIRTH_DATE")
 	private LocalDate birthDate;
 	
+	@NotNull
+	@Pattern(regexp = "^\\d+$", message = ApplicationConstant.REGEX_ONLY_NUMBERS_ALLOWED)
 	@Column(name="PHONE_NUMBER")
 	private Long phoneNumber;
 	
+	@Pattern(regexp = "^\\d+$", message = ApplicationConstant.REGEX_ONLY_NUMBERS_ALLOWED)
 	@Column(name="RG")
 	private Long rg;
 	
+	@NotNull
+	@Pattern(regexp = "^\\d+$", message = ApplicationConstant.REGEX_ONLY_NUMBERS_ALLOWED)
 	@Column(name="CPF")
 	private Long cpf;
+	
+	@NotNull
+	@Pattern(regexp = "^\\d+$", message = ApplicationConstant.REGEX_ONLY_NUMBERS_ALLOWED)
+	@Column(name="PHONE_CODE")
+	private Long phoneCode;
+	
+	@Pattern(regexp = "^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$", message = ApplicationConstant.REGEX_EMAIL_FORMAT)
+	@Column(name = "EMAIL")
+	private String email;
 	
 	@Column(name="REGISTRATION_DATE")
 	private LocalDateTime registrationDate;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	private AddressRegistration addressRegistration;
-	
-	@Column(name="PHONE_CODE")
-	private Long phoneCode;
 	
 	@OneToOne(mappedBy = "customerRegistration")
 	private SalesOrder salesOrder;

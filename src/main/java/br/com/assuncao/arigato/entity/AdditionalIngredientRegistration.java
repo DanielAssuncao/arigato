@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,9 +32,12 @@ public class AdditionalIngredientRegistration implements Serializable{
 	@Column(name="ID")
 	private Long id;
 	
+	@NotNull
 	@Column(name="NAME")
 	private String name;
 	
+	@NotNull
+	@Min(value = 0)
 	@Column(name="VALUE")
 	private Float value;
 	

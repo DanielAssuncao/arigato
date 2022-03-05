@@ -111,11 +111,11 @@ public abstract class CrudBaseController<T, I, F, S extends ICrudService<T, I, F
 	}
 
 	protected void prepareCreateForm(S service) {
-        //sobrescrever caso precise preparar dados para a tela de inclus�o
+        //sobrescrever caso precise preparar dados para a tela de inclusão
     }
     
     protected void prepareEditForm(S service) {
-        //sobrescrever caso precise preparar dados para a tela de edi��o
+        //sobrescrever caso precise preparar dados para a tela de edição
     }
     
     protected void prepareListForm(S service) {

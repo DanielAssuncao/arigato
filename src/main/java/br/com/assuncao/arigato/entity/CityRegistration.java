@@ -9,7 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
+import br.com.assuncao.arigato.util.ApplicationConstant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +32,8 @@ public class CityRegistration implements Serializable{
 	@Column(name="ID")
 	private Long id;
 	
+	@NotNull
+	@Pattern(regexp = "^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$", message = ApplicationConstant.REGEX_NAME_FORMAT)
 	@Column(name="NAME")
 	private String name;
 }
