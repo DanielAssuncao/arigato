@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 import lombok.AllArgsConstructor;
@@ -30,7 +30,7 @@ public class AccessLevel implements Serializable{
 	@Column(name="ID")
 	private Long id;
 	
-	@NotNull
+	@NotEmpty
 	@Pattern(regexp = "^[AEC]", message = "Access level options: Admin = A, Employee=E, Customer=C.")
 	@Column(name="LEVEL")
 	private Character level;

@@ -44,7 +44,7 @@ public class CustomerRegistrationService implements ICustomerRegistrationService
 	@Transactional
 	public CustomerRegistration findOne(Long id) {
 		return repository.findById(id).orElseThrow(() -> new GeneralException(
-				"Objeto n�o encontrado! Id: " + id + ", Tipo: " + CustomerRegistration.class.getName()));
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + CustomerRegistration.class.getName()));
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class CustomerRegistrationService implements ICustomerRegistrationService
 	}
 	
 	private void fieldsValidation(CustomerRegistration customerRegistration) {
-		if(customerRegistration.getName().isBlank()) {
+		if(customerRegistration.getName() == null || customerRegistration.getName().isBlank()) {
 			throw new GeneralException("The field NAME must be filled!");
 		}
 		if(repository.getByCpf(customerRegistration.getCpf(), customerRegistration.getId()) != null) {
@@ -68,7 +68,8 @@ public class CustomerRegistrationService implements ICustomerRegistrationService
 		if(customerRegistration.getCpf() == null) {
 			throw new GeneralException("The field CPF must be filled!");
 		}
-		if(customerRegistration.getAddressRegistration().getAddress().isBlank()) {
+		if(customerRegistration.getAddressRegistration().getAddress() == null 
+				|| customerRegistration.getAddressRegistration().getAddress().isBlank()) {
 			throw new GeneralException("The field ADDRESS must be filled!");
 		}
 	}

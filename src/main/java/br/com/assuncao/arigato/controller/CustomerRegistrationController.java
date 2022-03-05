@@ -40,38 +40,5 @@ public class CustomerRegistrationController extends CrudBaseController<CustomerR
 	
 	return listCity;
 	}
-	
-	/**
-	@RequestMapping(value="/save", method=RequestMethod.GET)
-	public ResponseEntity<?> save() {
-	
-	CadastroEndereco cadEndereco = new CadastroEndereco();
-	cadEndereco.setId(null);
-	cadEndereco.setLogradouro("Rua Italia");
-	cadEndereco.setNumero(Long.valueOf(60));
-	cadEndereco.setBairro("Centro");
-	cadEndereco.setCep(Long.valueOf(14800123));
-	
-	CadastroCliente cadCliente = new CadastroCliente();
-	cadCliente.setId(null);
-	cadCliente.setNome("Daniel Gomes");
-	cadCliente.setCpf(Long.valueOf(1234));
-	cadCliente.setRg(Long.valueOf(5678));
-	cadCliente.setDataNascimento(LocalDateTime.of(1987, 06, 30, 0, 0));
-	cadCliente.setDataCadastro(LocalDateTime.now());
-	cadCliente.setDdd(Long.valueOf(016));
-	cadCliente.setTelefone(Long.valueOf(123456789));
-	cadCliente.setCadEndereco(cadEndereco);
-	
-	CadastroCliente salvo = new CadastroCliente();
-	
-	try {	
-		salvo = service.save(cadCliente);
-	} catch (Exception e) {
-		 e.getMessage();
-	}
-	
-	return ResponseEntity.ok().body(salvo);
-	}**/
 }
 

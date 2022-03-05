@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,7 +30,7 @@ public class ProdCategoryRegistration implements Serializable {
 	@Column(name="ID")
 	private Long id;
 	
-	@NotNull
+	@NotEmpty
 	@Column(name="DESCRIPTION")
 	private String description;
 }

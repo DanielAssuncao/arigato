@@ -58,14 +58,15 @@ public abstract class CrudBaseController<T, I, F, S extends ICrudService<T, I, F
     }
     
     @RequestMapping(value = "/save", method=RequestMethod.POST)
-    protected void salvar(@ModelAttribute(ENTITY) T t, @ModelAttribute(FILTER) F filter) {
+    protected ResponseEntity<String> salvar(@ModelAttribute(ENTITY) T t, @ModelAttribute(FILTER) F filter) {
         try {
             service.save(t);
         } catch (GeneralException e) {
-        	//Enviar URL_BASE para o front e redirecionar para a p�gina NOVO
+        	System.out.println("Error: "+ e.getMessage());;
+        	return new ResponseEntity<String>("Error: "+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         
-      //Enviar URL_BASE para o front e redirecionar para a p�gina LISTA
+        return new ResponseEntity<String>("Registration successfully saved!", HttpStatus.OK);
     }
     
     @RequestMapping(value = "/edit", method=RequestMethod.POST)
@@ -83,7 +84,8 @@ public abstract class CrudBaseController<T, I, F, S extends ICrudService<T, I, F
         try {
         	service.save(customerRegistration);
         } catch (GeneralException e) {
-        	return new ResponseEntity<String>("Error: "+ e.getMessage(), HttpStatus.OK);
+        	System.out.println("Error: "+ e.getMessage());;
+        	return new ResponseEntity<String>("Error: "+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         
         return new ResponseEntity<String>("Registration successfully saved!", HttpStatus.OK);

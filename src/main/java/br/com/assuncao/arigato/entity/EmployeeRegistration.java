@@ -13,7 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 import br.com.assuncao.arigato.util.ApplicationConstant;
@@ -39,7 +39,7 @@ public class EmployeeRegistration implements Serializable {
 	@ManyToOne
 	private EmployeePositionRegistration employeePositionRegistration;
 
-	@NotNull
+	@NotEmpty
 	@Column(name = "NAME")
 	private String name;
 
@@ -59,11 +59,9 @@ public class EmployeeRegistration implements Serializable {
 	@ManyToOne(cascade = CascadeType.ALL)
 	private AddressRegistration addressRegistration;
 
-	@Pattern(regexp = "^\\d+$", message = ApplicationConstant.REGEX_ONLY_NUMBERS_ALLOWED)
 	@Column(name = "PHONE_NUMBER")
 	private Long phoneNumber;
 
-	@Pattern(regexp = "^\\d+$", message = ApplicationConstant.REGEX_ONLY_NUMBERS_ALLOWED)
 	@Column(name = "PHONE_CODE")
 	private Long phoneCode;
 

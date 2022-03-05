@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -32,7 +33,7 @@ public class AdditionalIngredientRegistration implements Serializable{
 	@Column(name="ID")
 	private Long id;
 	
-	@NotNull
+	@NotEmpty
 	@Column(name="NAME")
 	private String name;
 	

@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 import br.com.assuncao.arigato.util.ApplicationConstant;
@@ -32,7 +32,7 @@ public class CityRegistration implements Serializable{
 	@Column(name="ID")
 	private Long id;
 	
-	@NotNull
+	@NotEmpty
 	@Pattern(regexp = "^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$", message = ApplicationConstant.REGEX_NAME_FORMAT)
 	@Column(name="NAME")
 	private String name;
